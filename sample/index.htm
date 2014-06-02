@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		
+		<title>Table</title>
+		
+		<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<style type="text/css">
+			
+			table{}
+				
+				table td{ 
+					padding:50px;
+					border:1px solid silver;
+				}
+
+		</style>
+	</head>
+	<body>
+		<form action="/">	
+			<div class="teste">
+				<label>Nome</label><input type="text" class="required" name="" value=""  />
+				<label>Sobrenome</label><input type="text" class="required" name="" value="teste"  />
+			</div>
+		</form>
+
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src='validator.js' type='text/javascript'></script>
+		<script src='custom/rules.js' type='text/javascript'></script>
+		<script src='custom/messages.js' type='text/javascript'></script>
+		<script src='custom/plugin.mask.js' type='text/javascript'></script>
+		
+		<script type="text/javascript">
+
+				var holder, v;
+
+				holder = $('.teste');
+
+				v = Validator.create({ holder :holder });
+				v.add( '.required' , { rules :{ required :true }, mask :'cpf' });
+
+				v.bind('error', function(error){
+					//console.log( error.list );
+				});
+
+				holder.bind('each.validation', function(e, E){
+					console.log(E);
+				});
+
+				v.validate();
+
+		</script>
+		<!--script src='require.js' type='text/javascript'></script-->
+		<!--script src="compiled/v.js" type="text/javascript"></script-->
+		<!--script type='text/javascript'>
+
+			require([
+
+				'validator',
+				'custom/umd/rules',
+				'custom/umd/messages',
+				'custom/umd/plugins'
+
+			],function( Validator ){
+
+				var holder, v;
+
+				holder = $('.teste');
+
+				v = Validator.create({ holder :holder });
+				v.add( '.required' , { rules :{ required :true }, mask :'cpf' });
+
+				v.bind('error', function(error){
+					console.log( error.list );
+				});
+
+				holder.bind('each.validation', function(e, E){
+					//console.log(E);
+				});
+
+				v.validate();
+			});
+
+		</script-->
+	</body>
+</html>
