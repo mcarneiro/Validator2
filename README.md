@@ -62,7 +62,7 @@ var instance = Validator.create({ holder :$('div.section-required') });
 	instance.remove('.required');
 ```
 
-###.validate() : true|false
+###.validate() : true | false
 
 This method will trigger validation, and will return true if it's valid and false otherwhise.
 
