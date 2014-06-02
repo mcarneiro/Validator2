@@ -192,7 +192,7 @@ Is easy to extend Validator with new rules or plugins. You can add some brand ne
 Validator already comes with a plugin called `mask` and some default mask methods such as `accept`, `digits`, `email`, `letters`, `date` and some others methods.
 
 ```js
-instance.validate({
+instance.add({
 	'.number' :{
 		rules :{ required :true },
 		mask  :'digits'
@@ -203,7 +203,7 @@ instance.validate({
 If you want more then one mask just add more with "|" separator:
 
 ```js
-instance.validate({
+instance.add({
 	'.number' :{
 		rules :{ required :true },
 		mask  :'my-new-mask|my-other-mask|and-other'
