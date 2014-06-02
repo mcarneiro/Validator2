@@ -104,7 +104,7 @@
 		}
 
 		Plugins.each_elements( el, options );
-		scope.trigger('each.validation', el);
+		scope.trigger('validation.each', el);
 	}
 	
 	function check( hash, scope ){
