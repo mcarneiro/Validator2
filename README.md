@@ -159,7 +159,7 @@ The messages for each rule are defined in the `messages.js` **( Getting Started 
 But you can override them for some group of elements:
 
 ```js
-instance.validate({
+instance.add({
 	'.required' :{
 		rules :{ required :true }
 	},
@@ -277,7 +277,8 @@ Of course, you can edit/add/remove rules.js or messages.js custom files as you w
 
 ## TODOS
 
-- To Improve documentation…
+- Reviews in Readme.md
+- To Improve documentation
 - Adding some plugins
 - To create some "do everything" wrappers for lazy ones ( like me ).
 
