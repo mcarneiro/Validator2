@@ -46,7 +46,7 @@ Or you can set all the rules at once to be more easy:
 
 ```js
 var instance = Validator.create({ holder :$('form.contact') });
-	instance.rules({
+	instance.add_all({
 		'.required' :{ rules :{ required :true }},
 		'.email' :{ rules :{ email :true  }},
 		'.number' :{ rules :{ number :true }}
