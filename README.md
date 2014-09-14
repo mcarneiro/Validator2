@@ -79,7 +79,7 @@ Validator triggers events for success or error.
 This event will fire if the **.validate()** returns true;
 
 ```js
-instance.bind('success', function(){
+instance.bind('validator.success', function(){
 	var data = $('form.contact').serialize();
 	$.post('/url/service', data);
 });
