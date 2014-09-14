@@ -62,7 +62,7 @@ var instance = Validator.create({ holder :$('div.section-required') });
 	instance.remove('.required');
 ```
 
-###.validate() : true|false
+###.validate() : true | false
 
 This method will trigger validation, and will return true if it's valid and false otherwhise.
 
@@ -155,7 +155,7 @@ The messages for each rule are defined in the `messages.js` **( Getting Started 
 But you can override them for some group of elements:
 
 ```js
-instance.validate({
+instance.add({
 	'.required' :{
 		rules :{ required :true }
 	},
@@ -188,7 +188,11 @@ Is easy to extend Validator with new rules or plugins. You can add some brand ne
 Validator already comes with a plugin called `mask` and some default mask methods such as `accept`, `digits`, `email`, `letters`, `date` and some others methods.
 
 ```js
+<<<<<<< HEAD
 instance.add_all({
+=======
+instance.add({
+>>>>>>> 629d5ebec33cdb0de33ee80c3f3d83575fc595d3
 	'.number' :{
 		rules :{ required :true },
 		mask  :'digits'
@@ -199,7 +203,11 @@ instance.add_all({
 If you want more then one mask just add more with "|" separator:
 
 ```js
+<<<<<<< HEAD
 instance.add_all({
+=======
+instance.add({
+>>>>>>> 629d5ebec33cdb0de33ee80c3f3d83575fc595d3
 	'.number' :{
 		rules :{ required :true },
 		mask  :'my-new-mask|my-other-mask|and-other'
@@ -273,7 +281,8 @@ Of course, you can edit/add/remove rules.js or messages.js custom files as you w
 
 ## TODOS
 
-- To Improve documentation…
+- Reviews in Readme.md
+- To Improve documentation
 - Adding some plugins
 - To create some "do everything" wrappers for lazy ones ( like me ).
 
