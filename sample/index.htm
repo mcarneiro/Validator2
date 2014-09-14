@@ -7,81 +7,66 @@
 		<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
 		<style type="text/css">
-			
-			table{}
-				
-				table td{ 
-					padding:50px;
-					border:1px solid silver;
-				}
-
+			*{margin:0;padding:0;list-style:none}body{background:#ededed}h1{text-align:center;margin:20px 0}form{width:300px;margin:80px auto 20px;padding:40px;background:#fff}form p{padding:5px 0}form input{width:80%;padding:5px 0}form label{width:50px;display:inline-block}form button{padding:10px 20px;display:block;margin:10px auto}ul.error li{padding:10px;background:#FFB2B2;margin:5px 0}input.error{border:2px solid red}
 		</style>
 	</head>
 	<body>
-		<form action="/">	
-			<div class="teste">
-				<label>Nome</label><input type="text" class="required" name="" value=""  />
-				<label>Sobrenome</label><input type="text" class="required" name="" value="teste"  />
-			</div>
+
+		<h1>Validator - Sample</h1>
+		<form action="/" novalidate>
+			<p><label>Name :</label> <input type="text" class="required" name="" value=""  /></p>
+			<p><label>Age :</label> <input type="text" class="required number" name="" value=""  /></p>
+			<p><label>Email :</label> <input type="email" class="required" name="" value=""  /></p>
+			<p><label>File :</label> <input type="file" class="required" name="" value=""  /><em>Accepts :jpg,png,gif</em></p>
+			<p><button type="submit">Enviar</button></p>
 		</form>
 
-		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src='../validator.js' type='text/javascript'></script>
+
 		<script src='custom/rules.js' type='text/javascript'></script>
 		<script src='custom/messages.js' type='text/javascript'></script>
 		<script src='custom/plugin.mask.js' type='text/javascript'></script>
 		
 		<script type="text/javascript">
 
-				var holder, v;
+			var v, form = $('form'), input = form.find('input');
 
-				holder = $('.teste');
+			v = Validator.create({ holder :form });
 
-				v = Validator.create({ holder :holder });
-				v.add( '.required' , { rules :{ required :true }, mask :'cpf' });
+			v.add( '.required' , { rules :{ required :true } });
+			v.add( '.number' , { rules :{ number :true } });
+			v.add( 'input[type=email]' , { rules :{ email :true } });
+			v.add( 'input[type=file]' , { rules :{ accept :'jpg|png|gif' } });
 
-				v.bind('error', function(error){
-					console.log( error.list );
+			v.on('validator.error', function(error){
+
+				//Clearing errors
+				clear_errors();
+
+				$.each( error.list, function(){
+					$(this.element)
+						.addClass('error')
+						.prop('placeholder', this.messages.list[0]);
 				});
+			});
 
-				holder.bind('each.validation', function(e, E){
-					//console.log(E);
-				});
+			//Validation triggers
 
-				v.validate();
+			form.on('submit', function(){
+				return v.validate();
+			});
 
-		</script>
-		<!--script src='require.js' type='text/javascript'></script-->
-		<!--script src="compiled/v.js" type="text/javascript"></script-->
-		<!--script type='text/javascript'>
-
-			require([
-
-				'validator',
-				'custom/umd/rules',
-				'custom/umd/messages',
-				'custom/umd/plugins'
-
-			],function( Validator ){
-
-				var holder, v;
-
-				holder = $('.teste');
-
-				v = Validator.create({ holder :holder });
-				v.add( '.required' , { rules :{ required :true }, mask :'cpf' });
-
-				v.bind('error', function(error){
-					console.log( error.list );
-				});
-
-				holder.bind('each.validation', function(e, E){
-					//console.log(E);
-				});
-
+			input.on('change', function(){
+				clear_errors();
 				v.validate();
 			});
 
-		</script-->
+			function clear_errors(){
+				form.find('.error').removeClass('error');
+			}
+
+		</script>
+		
 	</body>
 </html>

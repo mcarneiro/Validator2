@@ -40,7 +40,7 @@ var instance = Validator.create({ holder :$('div.section-required') });
 ```
 And there you go! It can't be more simple. The div.section-required is your holder containing .required elements, it can be a div or the whole form if you will =).
 
-### .rules( {} )
+### .add_all( {} )
 
 Or you can set all the rules at once to be more easy:
 
@@ -74,7 +74,7 @@ var is_valid = instance.validate();
 
 Validator triggers events for success or error.
 
-### .bind('success', Function )
+### .on('validator.success', Function )
 
 This event will fire if the **.validate()** returns true;
 
@@ -85,7 +85,7 @@ instance.bind('success', function(){
 });
 ```
 
-### .bind('error', function(error){} ) 
+### .on('validator.error', function(error){} ) 
 
 Here's where you have full control of what should be displayed for user when something is invalid on your form. 
 
@@ -120,21 +120,17 @@ Do you see that `div.section-required` in the example above used as a holder for
 
 ##### Your holder will fire the following events:
 
-### on('validation.add', Function)
+### on('validator.add', Function)
 
 Will be fired on every call of `.rules()` or `.add()` instance methods.
 
 
-### on('validation.remove', Function)
+### on('validator.remove', Function)
 
 Will be triggered on every `.remove()` instance method calls.
 
 
-### on('validation.each', Function)
-
-Will be triggered on each element that fails for some rule. It will be fired by `.validation()` instance method.
-
-### on('get-validator', Function(instance))
+### on('validator.instance', Function(instance))
 
 That's seems a little weird.. but it will save you trust me…
 
@@ -144,7 +140,7 @@ In this case, `get-validator` event can help you a lot. You can get the validato
 
 ```js
 	var instance;
-	$('.form-holder').trigger('get-validator', function(validator){
+	$('.form-holder').trigger('validator.instance', function(validator){
 		instance = validator;
 		// Now you do whatever you want =)
 	});
@@ -192,7 +188,7 @@ Is easy to extend Validator with new rules or plugins. You can add some brand ne
 Validator already comes with a plugin called `mask` and some default mask methods such as `accept`, `digits`, `email`, `letters`, `date` and some others methods.
 
 ```js
-instance.validate({
+instance.add_all({
 	'.number' :{
 		rules :{ required :true },
 		mask  :'digits'
@@ -203,7 +199,7 @@ instance.validate({
 If you want more then one mask just add more with "|" separator:
 
 ```js
-instance.validate({
+instance.add_all({
 	'.number' :{
 		rules :{ required :true },
 		mask  :'my-new-mask|my-other-mask|and-other'
@@ -234,7 +230,7 @@ Using plugins you have 2 important methods:
 
 #### .initialize( {elements}, {options} )
 
-Implement this interface if you need to start up you plugin with the options setted on `.add()` or `.rules()` instance methods.
+Implement this interface if you need to start up you plugin with the options setted on `.add()` or `.add_all()` instance methods.
 
 `elements` will be the jqueries and `options` will be the object containing rules, messages and stuff.
 
@@ -268,7 +264,7 @@ If it's not clear what `each_elements` does, you can always print the objects in
 
 Validator2 is "compiled" using r.js that generates a compact version of the validator/rules/messages classes.
 
-If you want to do some changes on them, you'll have to put them all in the same folder and run: `node r.js -o baseUrl=src name=validator out=validator.js`
+If you want to do some changes on them, you'll have to put them all in the same folder and run: `./build`
 
 
 ##And that's it...
@@ -280,9 +276,5 @@ Of course, you can edit/add/remove rules.js or messages.js custom files as you w
 - To Improve documentation…
 - Adding some plugins
 - To create some "do everything" wrappers for lazy ones ( like me ).
-
-
-
-
 
 

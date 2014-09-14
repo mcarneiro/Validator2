@@ -28,36 +28,49 @@
 		_class :function(o){
 
 			var
-				holder = o.holder,
+				holder,
 				hash = {}, _self = this;
 
-			o.holder.bind('get-validator', get);
+			holder = (o && o.holder && o.holder.length)? o.holder :$('<div />');
+			holder.on('validator.instance', get);
+
+			this.test = function(el, options){
+				return validate( el, { rules :options }, { list: [], map :{} } );
+			};
+
+			this.get = function(key){
+				return hash[key];
+			};
+
+			this.put = function(element){
+				holder.append(element);
+			};
+
+			this.on = function(name, method){
+				holder.on( name, bind( method ) );
+			};
 
 			this.add = function( query, rules ){
 
 				hash[ query ] = rules;
 				Plugins.initialize( holder, rules, query );
 
-				holder.trigger('validation.add', holder, rules, query);
+				holder.trigger('validator.add', holder, rules, query);
 				return this;
 			};
 
-			this.rules = function(rules){
+			this.add_all = function(rules){
 
 				hash = rules;
 				Plugins.initialize( holder, rules );
 
-				holder.trigger('validation.add', holder, rules);
+				holder.trigger('validator.add', holder, rules);
 				return this;
 			};
 
 			this.remove = function( name ){
 				delete hash[ name ];
-				holder.trigger('validation.remove', name);
-			};
-
-			this.bind = function(name, method){
-				holder.bind('validation.'+name, bind( method ));
+				holder.trigger('validator.remove', name);
 			};
 
 			this.validate = function(){
@@ -65,12 +78,16 @@
 				var errors = check( hash, holder );
 
 				if( errors.list.length ){
-					holder.trigger('validation.error', errors);	
+					holder.trigger('validator.error', errors);
 				}else{
-					holder.trigger('validation.success');
+					holder.trigger('validator.success');
 				}
 
 				return !(!!errors.list.length);
+			};
+
+			this.is_valid = function(){
+				return !(!!check( hash, holder ).list.length);
 			};
 
 			function get(e, callback){
@@ -87,9 +104,10 @@
 
 	function create(el, options){
 		return{
-			element	:el,
+			element	:el.get? el.get(0) :el,
 			rules	:$.extend({}, options.rules),
-			messages:$.extend({ map:{}, list :[] }, { map: options.messages }) 
+			messages:$.extend({ map:{}, list :[] }, { map: options.messages }),
+			is_valid:true
 		};
 	}
 
@@ -104,7 +122,8 @@
 		}
 
 		Plugins.each_elements( el, options );
-		scope.trigger('validation.each', el);
+
+		return el;
 	}
 	
 	function check( hash, scope ){
@@ -123,7 +142,7 @@
 
 	function each_hash(scope, errors){
 		return function(selector, options){
-			$(selector, scope).each( each_elements(options, errors, scope) );	
+			$(selector, scope).each( each_elements(options, errors, scope) );
 		};
 	}
 

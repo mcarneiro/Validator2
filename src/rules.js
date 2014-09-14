@@ -40,23 +40,26 @@
 				console.log('Rules.test::exception', 'There is no method', name); 
 				return false;
 			}
-				
+
 			return rules[name].call(null, element, options);
 		},
 
 		validate :function(el, options, callback){
-			
-			var	
-				_self = this;
+
+			var
+				valid = true, _self = this;
 
 			$.each(options.rules, function(name, value){
 
 				if(!_self.test( el.element, name, value )){
-					
+
 					el.rules[name] = value;
+					el.is_valid = false;
 					callback? callback.call(null, el, name) :null;
 				}
 			});
+
+			return valid;
 		}
 	};
 	
