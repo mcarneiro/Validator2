@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Validator building process
+# Validator building process.
+# Dependencies : curl, node.
 # More info : http://requirejs.org/docs/optimization.html#empty
 
-#node r.js -o name=validator out=validator.js baseUrl=src
 
 echo "[Build :: Validator]" &&
 echo "Loading require.js for build..." &&
