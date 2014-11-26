@@ -74,18 +74,18 @@ var is_valid = instance.validate();
 
 Validator triggers events for success or error.
 
-### .on('validator.success', Function )
+### .on('validator:success', Function )
 
 This event will fire if the **.validate()** returns true;
 
 ```js
-instance.bind('validator.success', function(){
+instance.bind('validator:success', function(){
 	var data = $('form.contact').serialize();
 	$.post('/url/service', data);
 });
 ```
 
-### .on('validator.error', function(error){} ) 
+### .on('validator:error', function(error){} ) 
 
 Here's where you have full control of what should be displayed for user when something is invalid on your form. 
 
@@ -120,17 +120,17 @@ Do you see that `div.section-required` in the example above used as a holder for
 
 ##### Your holder will fire the following events:
 
-### on('validator.add', Function)
+### on('validator:add', Function)
 
 Will be fired on every call of `.rules()` or `.add()` instance methods.
 
 
-### on('validator.remove', Function)
+### on('validator:remove', Function)
 
 Will be triggered on every `.remove()` instance method calls.
 
 
-### on('validator.instance', Function(instance))
+### on('validator:instance', Function(instance))
 
 That's seems a little weird.. but it will save you trust me…
 
@@ -140,7 +140,7 @@ In this case, `get-validator` event can help you a lot. You can get the validato
 
 ```js
 	var instance;
-	$('.form-holder').trigger('validator.instance', function(validator){
+	$('.form-holder').trigger('validator:instance', function(validator){
 		instance = validator;
 		// Now you do whatever you want =)
 	});

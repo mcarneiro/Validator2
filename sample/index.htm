@@ -39,7 +39,7 @@
 			v.add( 'input[type=email]' , { rules :{ email :true } });
 			v.add( 'input[type=file]' , { rules :{ accept :'jpg|png|gif' } });
 
-			v.on('validator.error', function(error){
+			v.on('validator:error', function(error){
 
 				//Clearing errors
 				clear_errors();
