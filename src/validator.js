@@ -32,7 +32,7 @@
 				hash = {}, _self = this;
 
 			holder = (o && o.holder && o.holder.length)? o.holder :$('<div />');
-			holder.on('validator.instance', get);
+			holder.on('validator:instance', get);
 
 			this.test = function(el, options){
 				return validate( el, { rules :options }, { list: [], map :{} } );
@@ -55,7 +55,7 @@
 				hash[ query ] = rules;
 				Plugins.initialize( holder, rules, query );
 
-				holder.trigger('validator.add', holder, rules, query);
+				holder.trigger('validator:add', holder, rules, query);
 				return this;
 			};
 
@@ -64,13 +64,13 @@
 				hash = rules;
 				Plugins.initialize( holder, rules );
 
-				holder.trigger('validator.add', holder, rules);
+				holder.trigger('validator:add', holder, rules);
 				return this;
 			};
 
 			this.remove = function( name ){
 				delete hash[ name ];
-				holder.trigger('validator.remove', name);
+				holder.trigger('validator:remove', name);
 			};
 
 			this.validate = function(){
@@ -78,9 +78,9 @@
 				var errors = check( hash, holder );
 
 				if( errors.list.length ){
-					holder.trigger('validator.error', errors);
+					holder.trigger('validator:error', errors);
 				}else{
-					holder.trigger('validator.success');
+					holder.trigger('validator:success');
 				}
 
 				return !(!!errors.list.length);
